@@ -11,8 +11,6 @@ app.listen(port)
 
 //search for anime endpoint
 app.get('/search', (request, response) => {
-    console.log(request.query.name);
-
     quest(`https://gogoanime.so//search.html?keyword=${request.query.name}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
@@ -32,8 +30,6 @@ app.get('/search', (request, response) => {
 
 //GET Anime details
 app.get('/desc', (request, response) => {
-    console.log(request.query.link);
-
     quest(`https://gogoanime.so${request.query.link}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
@@ -79,9 +75,7 @@ app.get('/desc', (request, response) => {
 //get Episode for anime endpoint
 app.get('/episodes', (request, response) => {
     // get the episodes in the anime by parsing all links that are videos ${}
-    console.log(request.query);
     quest(`https://ajax.gogocdn.net/ajax/load-list-episode?ep_start=${request.query.start}&ep_end=${request.query.end}&id=${request.query.id}&default_ep=0&alias=${request.query.name}`, (error, _response, html) => {
-        console.log(error);
         if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
           const episodeArr = [];
@@ -98,14 +92,12 @@ app.get('/episodes', (request, response) => {
 
 //get Description for an for anime endpoint
 app.get('/downloadLink', (request, response) => {
-    // get the episodes in the anime by parsing all links that are videos
-    console.log(request.query.link);
 
     quest(`https://gogoanime.so/${request.query.link}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
-          const episodeArr = $('li.dowloads > a').attr('href');
-          DownloadLink(episodeArr).then((data)=>{
+          const Dlink = $('li.dowloads > a').attr('href');
+          DownloadLink(Dlink).then((data)=>{
             response.send(data) 
         }).catch(console.error);
         
@@ -117,11 +109,21 @@ app.get('/downloadLink', (request, response) => {
 function DownloadLink (link) {
     return new Promise((resolve, reject) => {
         try {
-            console.log(link);
+
             quest(link, (error, _response, html) => {
                 if (!error && _response.statusCode == 200) {
                     const $ = cheerio.load(html);
-                    return resolve($('script:not([src])')[0].children[0].data.split('"')[1]);
+                    const DlinkTypes =[]
+                    $('.dowload>a').each((i,el) => {
+                        if(i < 4){
+                            const title = $(el).text()
+                            const link = $(el).attr('href');
+                            DlinkTypes.push({name:title, link:link})
+                        }
+                      
+                    })
+                   
+                    return resolve(DlinkTypes);
                 }
             })
         } catch (e) {
