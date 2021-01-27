@@ -1,7 +1,7 @@
+// THIS IS THE FIRST VERSION OF THE ANIME WEB SCRAPER, THE SCRAPING IS DONE FROM ANIMEOUT AND QUITE LIMITED, OPEN INDEX.JS TO FIND THE CURRENT VERSION
 const express = require('express');
 const quest = require('request');
 const cheerio = require('cheerio');
-const puppeteer = require('puppeteer');
 let port = process.env.PORT || 3000
 
 const app = express();
