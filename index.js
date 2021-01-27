@@ -94,8 +94,6 @@ app.get('/episodes', (request, response) => {
           response.send(episodeArr) 
         }
       });
-
-
 });
 
 //get Description for an for anime endpoint
@@ -103,12 +101,12 @@ app.get('/downloadLink', (request, response) => {
     // get the episodes in the anime by parsing all links that are videos
     console.log(request.query.link);
 
-    quest(request.query.link, (error, _response, html) => {
+    quest(`https://gogoanime.so/${request.query.link}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
-          const episodeArr = $('a.btn').attr('href');
+          const episodeArr = $('li.dowloads > a').attr('href');
           DownloadLink(episodeArr).then((data)=>{
-            response.redirect(data) 
+            response.send(data) 
         }).catch(console.error);
         
         }
