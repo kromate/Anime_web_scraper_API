@@ -74,7 +74,7 @@ app.get('/desc', (request, response) => {
 
 //get Episode for anime endpoint
 app.get('/episodes', (request, response) => {
-    // get the episodes in the anime by parsing all links that are videos ${}
+    // get the episodes in the anime by parsing all links that are videos 
     quest(`https://ajax.gogocdn.net/ajax/load-list-episode?ep_start=${request.query.start}&ep_end=${request.query.end}&id=${request.query.id}&default_ep=0&alias=${request.query.name}`, (error, _response, html) => {
         if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
