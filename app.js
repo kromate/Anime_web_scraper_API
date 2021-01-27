@@ -30,7 +30,6 @@ app.get('/search', (request, response) => {
           $('h3 > a').each((i,el) => {
             const title = $(el).text()
             const link = $(el).attr('href');
-            const img = $(el).find('img')
             searchArray.push({name:title, link:link, image:imageArray[i]})
           });
           response.send(searchArray) 
