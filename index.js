@@ -7,6 +7,8 @@ let port = process.env.PORT || 3000
 const app = express();
 app.listen(port)
 
+app.use(cors())
+
 //ROUTES
 
 //search for anime endpoint
