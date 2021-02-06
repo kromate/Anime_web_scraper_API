@@ -30,6 +30,7 @@ app.get('/search', (request, response) => {
       });
 });
 
+app.use(cors())
 //GET Anime details
 app.get('/desc', (request, response) => {
     quest(`https://gogoanime.so${request.query.link}`, (error, _response, html) => {
@@ -74,6 +75,7 @@ app.get('/desc', (request, response) => {
       });
 });
 
+app.use(cors())
 //get Episode for anime endpoint
 app.get('/episodes', (request, response) => {
     // get the episodes in the anime by parsing all links that are videos 
@@ -92,6 +94,7 @@ app.get('/episodes', (request, response) => {
       });
 });
 
+app.use(cors())
 //get Description for an for anime endpoint
 app.get('/downloadLink', (request, response) => {
 
