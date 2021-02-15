@@ -2,6 +2,7 @@
 const express = require('express');
 const quest = require('request');
 const cheerio = require('cheerio');
+const cors = require('cors');
 let port = process.env.PORT || 3000
 
 const app = express();
@@ -25,6 +26,7 @@ app.get('/search', (request, response) => {
             const release = $(el).find('p.released').text();
             searchArray.push({name:title, link:link, image:img , release:release})
           });
+          response.set('Access-Control-Allow-Origin', '*');
           response.send(searchArray) 
         }
       });
@@ -70,6 +72,7 @@ app.get('/desc', (request, response) => {
                 otherNames:infoArray[5].i,
                  episodes:availableepisodes}
 
+                 response.set('Access-Control-Allow-Origin', '*');
           response.send(searchArray) 
         }
       });
@@ -89,6 +92,7 @@ app.get('/episodes', (request, response) => {
                 episodeArr.push({name:title, link:link})
          
           });
+          response.set('Access-Control-Allow-Origin', '*');
           response.send(episodeArr) 
         }
       });
@@ -103,6 +107,7 @@ app.get('/downloadLink', (request, response) => {
           const $ = cheerio.load(html);
           const Dlink = $('li.dowloads > a').attr('href');
           DownloadLink(Dlink).then((data)=>{
+            response.set('Access-Control-Allow-Origin', '*');
             response.send(data) 
         }).catch(console.error);
         
