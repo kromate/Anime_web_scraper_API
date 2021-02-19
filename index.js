@@ -125,7 +125,7 @@ function DownloadLink (link) {
                     const $ = cheerio.load(html);
                     const DlinkTypes =[]
                     $('.dowload>a').each((i,el) => {
-                        if(i < 4){
+                        if(i < 12){
                             const title = $(el).text()
                             const link = $(el).attr('href');
                             DlinkTypes.push({name:title, link:link})
