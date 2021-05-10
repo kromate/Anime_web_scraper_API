@@ -5,7 +5,7 @@ API URL = https://anime-web-scraper.herokuapp.com
 
 ### EndPoints
 
-/search with query parameter 'name':
+## /search, query parameter 'name':
   
   This call returns a JSON object in the format {name: ##, link: ##, image: ##, release: ##}
   
@@ -22,7 +22,7 @@ API URL = https://anime-web-scraper.herokuapp.com
   }
   ````
 
-/desc with query parameter 'link':
+## /desc, query parameter 'link':
   
   This call returns a JSON object in the format {id: ##, name: ##, type: ##, summary: ##, genre: ##, release: ##, status: ##, otherNames: ##, episodes: [{start: ##, end: ##}]}
   
@@ -49,7 +49,7 @@ API URL = https://anime-web-scraper.herokuapp.com
 }
   ````
 
-/episodes with query parameter 'start'. 'end', 'id', 'name':
+## /episodes, query parameters 'start'. 'end', 'id', 'name':
 
 This call returns a JSON object in the format {name: ##, link: ##}
 
@@ -69,7 +69,7 @@ Result
 ]
 ````
 
-/downloadLink with query parameter 'link': 
+/downloadLink, query parameter 'link': 
 
 This call returns a JSON object in the format {name: ##, link: ##}
 
