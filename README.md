@@ -51,7 +51,7 @@ API URL = https://anime-web-scraper.herokuapp.com
   ````
 
 
-## /episodes, query parameters 'start'. 'end', 'id', 'name' 📺
+## /episodes, query parameters 'start', 'end', 'id', 'name' 📺
 
 This call returns a JSON object in the format {name: ##, link: ##}
 
