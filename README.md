@@ -49,6 +49,37 @@ API URL = https://anime-web-scraper.herokuapp.com
 }
   ````
 
-/episodes with query parameter 'start'. 'end', 'id', 'name'
+/episodes with query parameter 'start'. 'end', 'id', 'name':
 
-/downloadLink with query parameter 'link'
+This call returns a JSON object in the format {name: ##, link: ##}
+
+Example: https://anime-web-scraper.herokuapp.com/episodes?start=1&end=2&id=8933&name=world-trigger-dub
+
+Result
+````JSON
+[
+  {
+    "name": "\n\t\t\t\tEP 2\n                \n                DUB\n              ",
+    "link": " /world-trigger-dub-episode-2"
+  },
+  {
+    "name": "\n\t\t\t\tEP 1\n                \n                DUB\n              ",
+    "link": " /world-trigger-dub-episode-1"
+  }
+]
+````
+
+/downloadLink with query parameter 'link': 
+
+This call returns a JSON object in the format {name: ##, link: ##}
+
+Example: https://anime-web-scraper.herokuapp.com/downloadLink?link=/world-trigger-dub-episode-2
+
+Result
+
+````JSON
+{
+    "name": "Download\n            (HDP - mp4)",
+    "link": "https://storage.googleapis.com/river-data-311609/WF6EZJFJ9B/22a_1620636671_136382.mp4"
+  }
+````
