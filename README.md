@@ -6,8 +6,11 @@ API URL = https://anime-web-scraper.herokuapp.com
 ### EndPoints
 
 /search with query parameter 'name':
+  
   This call returns a JSON object in the format {name: ##, link: ##, image: ##, release: ##}
+  
   Example: https://anime-web-scraper.herokuapp.com/search?name=world-trigger
+  
   One of the results returned by the query
   
   ````JSON
@@ -20,8 +23,11 @@ API URL = https://anime-web-scraper.herokuapp.com
   ````
 
 /desc with query parameter 'link':
+  
   This call returns a JSON object in the format {id: ##, name: ##, type: ##, summary: ##, genre: ##, release: ##, status: ##, otherNames: ##, episodes: [{start: ##, end: ##}]}
+  
   Example: https://anime-web-scraper.herokuapp.com/desc?link=/category/world-trigger-dub
+  
   Result
   
   ````JSON
