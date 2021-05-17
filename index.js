@@ -12,6 +12,27 @@ app.use(cors())
 
 //ROUTES
 
+
+//list by genre for anime endpoint
+app.get('/gl', (request, response) => {
+  quest(`https://gogoanime.so//search.html?keyword=${request.query.name}`, (error, _response, html) => {
+  if (!error && _response.statusCode == 200) {
+        const $ = cheerio.load(html);
+        const searchArray = [];
+      
+        $('ul.items li').each((i,el) => {
+          const title = $(el).find('p.name a').text();
+          const link = $(el).find('p.name a').attr('href');
+          const img = $(el).find('.img img').attr('src');
+          const release = $(el).find('p.released').text();
+          searchArray.push({name:title, link:link, image:img , release:release})
+        });
+        response.set('Access-Control-Allow-Origin', '*');
+        response.send(searchArray) 
+      }
+    });
+});
+
 //Genre list for anime endpoint ========================================================== WIP 
 app.get('/genres', (request, response) => {
   console.log(request.query.page);
