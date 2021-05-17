@@ -12,7 +12,7 @@ app.use(cors())
 
 //ROUTES
 
-//Recent for anime endpoint
+//Popular for anime endpoint
 app.get('/popular', (request, response) => {
   console.log(request.query.page);
     quest(`https://ajax.gogo-load.com/ajax/page-recent-release-ongoing.html?page=${request.query.page}`, (error, _response, html) => {
@@ -24,9 +24,10 @@ app.get('/popular', (request, response) => {
             console.log(el);
             const title = $(el).find('a').text();
             const link = $(el).find('a').attr('href');
+            const genre = $(el).find('p.genres').text();
             const img = $(el).find('.img img').attr('src');
             const release = $(el).find('p.released').text();
-            searchArray.push({name:title, link:link, image:img , release:release})
+            searchArray.push({name:title, link:link, image:img , release:release, genre:genre})
           });
           response.set('Access-Control-Allow-Origin', '*');
           response.send(searchArray) 
