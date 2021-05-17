@@ -20,9 +20,9 @@ app.get('/letters', (request, response) => {
         const $ = cheerio.load(html);
         const searchArray = [];
       
-        $('.anime_list_body ul li, .anime_list_body ul li a').each((i,el) => {
-          const title = $(el).find('p.name a').text();
-          const link = $(el).find('p.name a').attr('href');
+        $('.anime_list_body ul li a').each((i,el) => {
+          const title = $(el).text();
+          const link = $(el).attr('href');
           const img = $(el).find('.img img').attr('src');
           const release = $(el).find('p.released').text();
           searchArray.push({name:title, link:link, image:img , release:release})
