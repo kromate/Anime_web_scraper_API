@@ -25,7 +25,6 @@ app.get('/popular', (request, response) => {
             const link = $(el).find('a').attr('href');
             const genre = $(el).find('p.genres').text();
             const img = $(el).find('.thumbnail-popular').css('background');
-            console.log(img);
             const latest = $(el).find('p>a').text();
             searchArray.push({name:title, link:link, image:img , latest:latest, genre:genre})
           });
@@ -35,9 +34,9 @@ app.get('/popular', (request, response) => {
       });
 });
 
-//Recent for anime endpoint
+//Recent for anime endpoint ================================================== WIP
 app.get('/recent', (request, response) => {
-    quest(`https://gogoanime.so`, (error, _response, html) => {
+    quest(`https://ajax.gogo-load.com/ajax/page-recent-release.html?page=${request.query.page}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
           const searchArray = [];
@@ -47,8 +46,7 @@ app.get('/recent', (request, response) => {
             const title = $(el).find('p.name a').text();
             const link = $(el).find('p.name a').attr('href');
             const img = $(el).find('.img img').attr('src');
-            const release = $(el).find('p.released').text();
-            searchArray.push({name:title, link:link, image:img , release:release})
+            searchArray.push({name:title, link:link, image:img })
           });
           response.set('Access-Control-Allow-Origin', '*');
           response.send(searchArray) 
