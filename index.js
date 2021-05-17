@@ -14,6 +14,7 @@ app.use(cors())
 
 
 //list by Letter for anime endpoint
+// http://localhost:3000/letters/?name=p ================= Exp
 app.get('/letters', (request, response) => {
   quest(`https://www1.gogoanime.ai/anime-list-${request.query.name}`, (error, _response, html) => {
   if (!error && _response.statusCode == 200) {
@@ -23,9 +24,7 @@ app.get('/letters', (request, response) => {
         $('.anime_list_body ul li a').each((i,el) => {
           const title = $(el).text();
           const link = $(el).attr('href');
-          const img = $(el).find('.img img').attr('src');
-          const release = $(el).find('p.released').text();
-          searchArray.push({name:title, link:link, image:img , release:release})
+          searchArray.push({name:title, link:link})
         });
         response.set('Access-Control-Allow-Origin', '*');
         response.send(searchArray) 
@@ -34,6 +33,7 @@ app.get('/letters', (request, response) => {
 });
 
 //list by genre for anime endpoint
+// http://localhost:3000/gl/?link=/genre/ecchi ============= exp
 app.get('/gl', (request, response) => {
   quest(`https://www1.gogoanime.ai/${request.query.link}`, (error, _response, html) => {
   if (!error && _response.statusCode == 200) {
@@ -54,6 +54,7 @@ app.get('/gl', (request, response) => {
 });
 
 //Genre list for anime endpoint ========================================================== WIP 
+// http://localhost:3000/genres =====================
 app.get('/genres', (request, response) => {
   console.log(request.query.page);
     quest(`https://www1.gogoanime.ai/`, (error, _response, html) => {
@@ -71,7 +72,9 @@ app.get('/genres', (request, response) => {
         }
       });
 });
+
 //Popular for anime endpoint ========================================================== WIP 
+// http://localhost:3000/popular/?page=2 =========== EX
 app.get('/popular', (request, response) => {
   console.log(request.query.page);
     quest(`https://ajax.gogo-load.com/ajax/page-recent-release-ongoing.html?page=${request.query.page}`, (error, _response, html) => {
@@ -94,7 +97,9 @@ app.get('/popular', (request, response) => {
 });
 
 //Recent for anime endpoint ================================================== WIP
-// the lonk here is for direct download only not details
+// the link here is for direct download only not details
+// http://localhost:3000/recent/?page=2 ============= EX
+
 app.get('/recent', (request, response) => {
     quest(`https://ajax.gogo-load.com/ajax/page-recent-release.html?page=${request.query.page}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
