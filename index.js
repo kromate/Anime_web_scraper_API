@@ -107,7 +107,7 @@ app.get('/desc', (request, response) => {
          let searchArray=   {
              id:id,
             name:name,
-            type:infoArray[0].i,
+            type:infoArray[0] ? infoArray[0].i: '',
                 summary:infoArray[1].i,
                 genre:infoArray[2].i,
                 release:infoArray[3].i,
