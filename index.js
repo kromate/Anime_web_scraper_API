@@ -22,11 +22,8 @@ app.get('/genres', (request, response) => {
         
           $('nav.menu_top ul li ul li a').each((i,el) => {
             const title = $(el).text();
-            const link = $(el).find('a').attr('href');
-            const genre = $(el).find('p.genres').text();
-            const img = $(el).find('.thumbnail-popular').css('background');
-            const latest = $(el).find('p>a').text();
-            searchArray.push({name:title, link:link, image:img , latest:latest, genre:genre})
+            const link = $(el).attr('href');
+            searchArray.push({name:title, link:link })
           });
           response.set('Access-Control-Allow-Origin', '*');
           response.send(searchArray) 
