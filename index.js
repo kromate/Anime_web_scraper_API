@@ -35,6 +35,7 @@ app.get('/popular', (request, response) => {
 });
 
 //Recent for anime endpoint ================================================== WIP
+// the lonk here is for direct download only not details
 app.get('/recent', (request, response) => {
     quest(`https://ajax.gogo-load.com/ajax/page-recent-release.html?page=${request.query.page}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
@@ -107,7 +108,7 @@ app.get('/desc', (request, response) => {
          let searchArray=   {
              id:id,
             name:name,
-            type:infoArray[0] ? infoArray[0].i: '',
+            type:infoArray[0].i,
                 summary:infoArray[1].i,
                 genre:infoArray[2].i,
                 release:infoArray[3].i,
