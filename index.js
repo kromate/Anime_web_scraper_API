@@ -14,15 +14,16 @@ app.use(cors())
 
 //Recent for anime endpoint
 app.get('/popular', (request, response) => {
-    quest(`https://gogoanime.so`, (error, _response, html) => {
+  console.log(request.query.page);
+    quest(`https://ajax.gogo-load.com/ajax/page-recent-release-ongoing.html?page=${request.query.page}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
           const searchArray = [];
         
-          $('ul.items li').each((i,el) => {
+          $('.added_series_body > ul li').each((i,el) => {
             console.log(el);
-            const title = $(el).find('p.name a').text();
-            const link = $(el).find('p.name a').attr('href');
+            const title = $(el).find('a').text();
+            const link = $(el).find('a').attr('href');
             const img = $(el).find('.img img').attr('src');
             const release = $(el).find('p.released').text();
             searchArray.push({name:title, link:link, image:img , release:release})
