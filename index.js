@@ -42,11 +42,11 @@ app.get('/recent', (request, response) => {
           const searchArray = [];
         
           $('ul.items li').each((i,el) => {
-            console.log(el);
             const title = $(el).find('p.name a').text();
+            const episode = $(el).find('p.episode').text();
             const link = $(el).find('p.name a').attr('href');
             const img = $(el).find('.img img').attr('src');
-            searchArray.push({name:title, link:link, image:img })
+            searchArray.push({name:title, link:link, image:img, episode:episode })
           });
           response.set('Access-Control-Allow-Origin', '*');
           response.send(searchArray) 
