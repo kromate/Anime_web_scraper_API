@@ -20,14 +20,14 @@ app.get('/letters', (request, response) => {
   if (!error && _response.statusCode == 200) {
         const $ = cheerio.load(html);
         const searchArray = [];
-      
+
         $('.anime_list_body ul li a').each((i,el) => {
           const title = $(el).text();
           const link = $(el).attr('href');
           searchArray.push({name:title, link:link})
         });
         response.set('Access-Control-Allow-Origin', '*');
-        response.send(searchArray) 
+        response.send(searchArray)
       }
     });
 });
@@ -39,7 +39,7 @@ app.get('/gl', (request, response) => {
   if (!error && _response.statusCode == 200) {
         const $ = cheerio.load(html);
         const searchArray = [];
-      
+
         $('ul.items li').each((i,el) => {
           const title = $(el).find('p.name a').text();
           const link = $(el).find('p.name a').attr('href');
@@ -48,12 +48,12 @@ app.get('/gl', (request, response) => {
           searchArray.push({name:title, link:link, image:img , release:release})
         });
         response.set('Access-Control-Allow-Origin', '*');
-        response.send(searchArray) 
+        response.send(searchArray)
       }
     });
 });
 
-//Genre list for anime endpoint ========================================================== WIP 
+//Genre list for anime endpoint ========================================================== WIP
 // http://localhost:3000/genres =====================
 app.get('/genres', (request, response) => {
   console.log(request.query.page);
@@ -61,19 +61,19 @@ app.get('/genres', (request, response) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
           const searchArray = [];
-        
+
           $('nav.menu_top ul li ul li a').each((i,el) => {
             const title = $(el).text();
             const link = $(el).attr('href');
             searchArray.push({name:title, link:link })
           });
           response.set('Access-Control-Allow-Origin', '*');
-          response.send(searchArray) 
+          response.send(searchArray)
         }
       });
 });
 
-//Popular for anime endpoint ========================================================== WIP 
+//Popular for anime endpoint ========================================================== WIP
 // http://localhost:3000/popular/?page=2 =========== EX
 app.get('/popular', (request, response) => {
   console.log(request.query.page);
@@ -81,17 +81,22 @@ app.get('/popular', (request, response) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
           const searchArray = [];
-        
+
           $('.added_series_body > ul li').each((i,el) => {
-            const title = $(el).find('a').text();
+            const title = $(el).find('a').toArray()[0].attribs.title;
             const link = $(el).find('a').attr('href');
-            const genre = $(el).find('p.genres').text();
-            const img = $(el).find('.thumbnail-popular').css('background');
-            const latest = $(el).find('p>a').text();
+            const genre = $(el).find('p.genres').text().split(':')[1];
+            const img = $(el).find('.thumbnail-popular').css('background').split("'")[1]
+            const Numlatest = $(el).find('a').text().trim().split(',').length
+            const last_latest = $(el).find('a').text().trim().split(',')[Numlatest-1]
+            const latest = $(el).find('a').text().trim().split(',')[Numlatest-1].substring(last_latest.length - 9)
+
+
+
             searchArray.push({name:title, link:link, image:img , latest:latest, genre:genre})
           });
           response.set('Access-Control-Allow-Origin', '*');
-          response.send(searchArray) 
+          response.send(searchArray)
         }
       });
 });
@@ -105,7 +110,7 @@ app.get('/recent', (request, response) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
           const searchArray = [];
-        
+
           $('ul.items li').each((i,el) => {
             const title = $(el).find('p.name a').text();
             const episode = $(el).find('p.episode').text();
@@ -114,7 +119,7 @@ app.get('/recent', (request, response) => {
             searchArray.push({name:title, link:link, image:img, episode:episode })
           });
           response.set('Access-Control-Allow-Origin', '*');
-          response.send(searchArray) 
+          response.send(searchArray)
         }
       });
 });
@@ -126,7 +131,7 @@ app.get('/search', (request, response) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
           const searchArray = [];
-        
+
           $('ul.items li').each((i,el) => {
             const title = $(el).find('p.name a').text();
             const link = $(el).find('p.name a').attr('href');
@@ -135,7 +140,7 @@ app.get('/search', (request, response) => {
             searchArray.push({name:title, link:link, image:img , release:release})
           });
           response.set('Access-Control-Allow-Origin', '*');
-          response.send(searchArray) 
+          response.send(searchArray)
         }
       });
 });
@@ -157,7 +162,7 @@ app.get('/desc', (request, response) => {
         // [3] = release
         // [4] = status
         // [5] = other name
-        
+
           $('.anime_info_body p.type').each((i,el) => {
             const det = $(el).text().split(':')[1]
             infoArray.push({i:det})
@@ -168,7 +173,7 @@ app.get('/desc', (request, response) => {
             const end = $(el).text().split('-')[1]
             availableepisodes.push({start:start, end:end})
           })
-          
+
          let searchArray=   {
              id:id,
             name:name,
@@ -181,7 +186,7 @@ app.get('/desc', (request, response) => {
                  episodes:availableepisodes}
 
                  response.set('Access-Control-Allow-Origin', '*');
-          response.send(searchArray) 
+          response.send(searchArray)
         }
       });
 });
@@ -189,7 +194,7 @@ app.get('/desc', (request, response) => {
 app.use(cors())
 //get Episode for anime endpoint
 app.get('/episodes', (request, response) => {
-    // get the episodes in the anime by parsing all links that are videos 
+    // get the episodes in the anime by parsing all links that are videos
     quest(`https://ajax.gogocdn.net/ajax/load-list-episode?ep_start=${request.query.start}&ep_end=${request.query.end}&id=${request.query.id}&default_ep=0&alias=${request.query.name}`, (error, _response, html) => {
         if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
@@ -198,10 +203,10 @@ app.get('/episodes', (request, response) => {
                 const title = $(el).text()
                 const link = $(el).attr('href');
                 episodeArr.push({name:title, link:link})
-         
+
           });
           response.set('Access-Control-Allow-Origin', '*');
-          response.send(episodeArr) 
+          response.send(episodeArr)
         }
       });
 });
@@ -216,9 +221,9 @@ app.get('/downloadLink', (request, response) => {
           const Dlink = $('li.dowloads > a').attr('href');
           DownloadLink(Dlink).then((data)=>{
             response.set('Access-Control-Allow-Origin', '*');
-            response.send(data) 
+            response.send(data)
         }).catch(console.error);
-        
+
         }
       });
 });
@@ -238,9 +243,9 @@ function DownloadLink (link) {
                             const link = $(el).attr('href');
                             DlinkTypes.push({name:title, link:link})
                         }
-                      
+
                     })
-                   
+
                     return resolve(DlinkTypes);
                 }
             })
