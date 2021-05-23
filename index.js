@@ -257,3 +257,6 @@ function DownloadLink (link) {
 
 
 
+setInterval(function() {
+  quest("https://anime-web-scraper.herokuapp.com/popular/?page=1");
+}, 300000); // every 5 minutes (300000)
