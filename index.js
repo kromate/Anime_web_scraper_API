@@ -127,7 +127,7 @@ app.get('/recent', (request, response) => {
 
 //search for anime endpoint
 app.get('/search', (request, response) => {
-    quest(`https://gogoanime.so//search.html?keyword=${request.query.name}`, (error, _response, html) => {
+    quest(`https://www1.gogoanime.ai/search.html?keyword=${request.query.name}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
           const searchArray = [];
@@ -148,7 +148,7 @@ app.get('/search', (request, response) => {
 app.use(cors())
 //GET Anime details
 app.get('/desc', (request, response) => {
-    quest(`https://gogoanime.so${request.query.link}`, (error, _response, html) => {
+    quest(`https://www1.gogoanime.ai${request.query.link}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
           const availableepisodes = [];
@@ -215,7 +215,7 @@ app.use(cors())
 //get Description for an for anime endpoint
 app.get('/downloadLink', (request, response) => {
 
-    quest(`https://gogoanime.so/${request.query.link}`, (error, _response, html) => {
+    quest(`https://www1.gogoanime.ai/${request.query.link}`, (error, _response, html) => {
     if (!error && _response.statusCode == 200) {
           const $ = cheerio.load(html);
           const Dlink = $('li.dowloads > a').attr('href');
